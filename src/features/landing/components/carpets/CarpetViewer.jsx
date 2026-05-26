@@ -1,6 +1,7 @@
 import { Suspense, useEffect, useRef } from 'react'
 import { Canvas } from '@react-three/fiber'
-import { CameraControls, Stage } from '@react-three/drei'
+import { OrbitControls, Stage } from '@react-three/drei'
+import * as THREE from 'three'
 
 import { cn } from '@/lib/utils'
 
@@ -9,7 +10,7 @@ const INITIAL_CAMERA = {
   target: [0, 0.5, 0],
 }
 
-function ViewerCameraControls({ controlsRef }) {
+function ViewerCameraControls({ controlsRef, resetKey }) {
 
   useEffect(() => {
     const controls = controlsRef.current
@@ -17,24 +18,43 @@ function ViewerCameraControls({ controlsRef }) {
 
     const [px, py, pz] = INITIAL_CAMERA.position
     const [tx, ty, tz] = INITIAL_CAMERA.target
-    controls.setLookAt(px, py, pz, tx, ty, tz, false)
+    controls.object.position.set(px, py, pz)
+    controls.target.set(tx, ty, tz)
+    controls.update()
   }, [controlsRef])
 
+  useEffect(() => {
+    if (!resetKey) return
+
+    const controls = controlsRef.current
+    if (!controls) return
+
+    const [px, py, pz] = INITIAL_CAMERA.position
+    const [tx, ty, tz] = INITIAL_CAMERA.target
+    controls.object.position.set(px, py, pz)
+    controls.target.set(tx, ty, tz)
+    controls.update()
+  }, [controlsRef, resetKey])
+
   return (
-    <CameraControls
+    <OrbitControls
       ref={controlsRef}
       makeDefault
+      enablePan
+      enableDamping
+      dampingFactor={0.08}
       minDistance={4.5}
       maxDistance={40}
       minPolarAngle={0}
       maxPolarAngle={Math.PI - 0.08}
-      dollySpeed={2.4}
-      truckSpeed={1.4}
-      azimuthRotateSpeed={0.9}
-      polarRotateSpeed={0.9}
-      smoothTime={0.55}
-      draggingSmoothTime={0.12}
-      dollyToCursor
+      rotateSpeed={0.85}
+      zoomSpeed={2.2}
+      panSpeed={1.15}
+      mouseButtons={{
+        LEFT: THREE.MOUSE.ROTATE,
+        MIDDLE: THREE.MOUSE.DOLLY,
+        RIGHT: THREE.MOUSE.PAN,
+      }}
     />
   )
 }
@@ -53,6 +73,7 @@ function CarpetViewer({
   controls = true,
   intensity = 0.6,
   shadows = 'contact',
+  resetKey = 0,
   ...canvasProps
 }) {
   const controlsRef = useRef(null)
@@ -65,7 +86,7 @@ function CarpetViewer({
       )}
     >
       <Canvas
-        shadows
+        shadows={THREE.PCFShadowMap}
         dpr={[1, 2]}
         camera={{ position: [0, 6, 22], fov: 35, near: 0.1, far: 200 }}
         gl={{ antialias: true, powerPreference: 'high-performance' }}
@@ -83,7 +104,9 @@ function CarpetViewer({
             {children}
           </Stage>
         </Suspense>
-        {controls && <ViewerCameraControls controlsRef={controlsRef} />}
+        {controls && (
+          <ViewerCameraControls controlsRef={controlsRef} resetKey={resetKey} />
+        )}
       </Canvas>
     </div>
   )

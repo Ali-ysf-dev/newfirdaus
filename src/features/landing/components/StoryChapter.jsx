@@ -11,6 +11,7 @@ function StoryChapter({
   align = 'center',
   className,
   children,
+  childrenPosition = 'below',
 }) {
   const ref = useRef(null)
   const inView = useInView(ref, { amount: 0.35, margin: '-10% 0px -10% 0px' })
@@ -40,6 +41,57 @@ function StoryChapter({
 
   const useHorizontal = align !== 'center'
   const activeVariants = useHorizontal ? horizontalVariants : variants
+  const hasSideChildren = Boolean(children) && childrenPosition !== 'below'
+
+  const textContent = (
+    <>
+      {eyebrow && (
+        <motion.span
+          initial="hidden"
+          animate={inView ? 'visible' : 'hidden'}
+          variants={activeVariants}
+          transition={{ ...transition, delay: 0.05 }}
+          className="text-[11px] font-medium uppercase tracking-[0.28em] text-amber-700/80 dark:text-amber-200/80 sm:text-xs"
+        >
+          {eyebrow}
+        </motion.span>
+      )}
+
+      <motion.h2
+        initial="hidden"
+        animate={inView ? 'visible' : 'hidden'}
+        variants={activeVariants}
+        transition={{ ...transition, delay: 0.15 }}
+        className="font-heading text-balance text-3xl font-medium leading-[1.1] text-stone-50 sm:text-4xl md:text-5xl lg:text-6xl"
+      >
+        {title}
+      </motion.h2>
+
+      {body && (
+        <motion.p
+          initial="hidden"
+          animate={inView ? 'visible' : 'hidden'}
+          variants={activeVariants}
+          transition={{ ...transition, delay: 0.25 }}
+          className="text-pretty text-base text-stone-300 sm:text-lg md:text-xl"
+        >
+          {body}
+        </motion.p>
+      )}
+
+      {children && !hasSideChildren && (
+        <motion.div
+          initial="hidden"
+          animate={inView ? 'visible' : 'hidden'}
+          variants={activeVariants}
+          transition={{ ...transition, delay: 0.35 }}
+          className="w-full"
+        >
+          {children}
+        </motion.div>
+      )}
+    </>
+  )
 
   return (
     <section
@@ -53,63 +105,58 @@ function StoryChapter({
       <div
         className={cn(
           'mx-auto w-full max-w-7xl',
-          align === 'center' && 'flex justify-center'
+          align === 'center' && !hasSideChildren && 'flex justify-center'
         )}
       >
-        <div
-          className={cn(
-            'flex max-w-2xl flex-col gap-5 md:max-w-xl lg:max-w-2xl',
-            align === 'center' && 'items-center text-center',
-            align === 'start' && 'mr-auto items-start text-left',
-            align === 'end' && 'ml-auto items-end text-right'
-          )}
-        >
-          {eyebrow && (
-            <motion.span
-              initial="hidden"
-              animate={inView ? 'visible' : 'hidden'}
-              variants={activeVariants}
-              transition={{ ...transition, delay: 0.05 }}
-              className="text-[11px] font-medium uppercase tracking-[0.28em] text-amber-700/80 dark:text-amber-200/80 sm:text-xs"
-            >
-              {eyebrow}
-            </motion.span>
-          )}
+        {hasSideChildren ? (
+          <div className="grid gap-10 lg:grid-cols-2 lg:items-center lg:gap-14">
+            {childrenPosition === 'left' && (
+              <motion.div
+                initial="hidden"
+                animate={inView ? 'visible' : 'hidden'}
+                variants={activeVariants}
+                transition={{ ...transition, delay: 0.35 }}
+                className="w-full"
+              >
+                {children}
+              </motion.div>
+            )}
 
-          <motion.h2
-            initial="hidden"
-            animate={inView ? 'visible' : 'hidden'}
-            variants={activeVariants}
-            transition={{ ...transition, delay: 0.15 }}
-            className="font-heading text-balance text-3xl font-medium leading-[1.1] text-stone-50 sm:text-4xl md:text-5xl lg:text-6xl"
+            <div
+              className={cn(
+                'flex max-w-2xl flex-col gap-5 md:max-w-xl lg:max-w-2xl',
+                align === 'center' && 'items-center text-center',
+                align === 'start' && 'mr-auto items-start text-left',
+                align === 'end' && 'ml-auto items-end text-right'
+              )}
+            >
+              {textContent}
+            </div>
+
+            {childrenPosition === 'right' && (
+              <motion.div
+                initial="hidden"
+                animate={inView ? 'visible' : 'hidden'}
+                variants={activeVariants}
+                transition={{ ...transition, delay: 0.35 }}
+                className="w-full"
+              >
+                {children}
+              </motion.div>
+            )}
+          </div>
+        ) : (
+          <div
+            className={cn(
+              'flex max-w-2xl flex-col gap-5 md:max-w-xl lg:max-w-2xl',
+              align === 'center' && 'items-center text-center',
+              align === 'start' && 'mr-auto items-start text-left',
+              align === 'end' && 'ml-auto items-end text-right'
+            )}
           >
-            {title}
-          </motion.h2>
-
-          {body && (
-            <motion.p
-              initial="hidden"
-              animate={inView ? 'visible' : 'hidden'}
-              variants={activeVariants}
-              transition={{ ...transition, delay: 0.25 }}
-              className="text-pretty text-base text-stone-300 sm:text-lg md:text-xl"
-            >
-              {body}
-            </motion.p>
-          )}
-
-          {children && (
-            <motion.div
-              initial="hidden"
-              animate={inView ? 'visible' : 'hidden'}
-              variants={activeVariants}
-              transition={{ ...transition, delay: 0.35 }}
-              className="w-full"
-            >
-              {children}
-            </motion.div>
-          )}
-        </div>
+            {textContent}
+          </div>
+        )}
       </div>
     </section>
   )

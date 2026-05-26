@@ -318,12 +318,18 @@ function HeroSequence({ content }) {
       {/* Chapter overlays — pinned timeline fades these in then out */}
       <div className="pointer-events-none absolute inset-0 flex items-center justify-center px-5 sm:px-8">
         <div className="relative w-full max-w-3xl">
-          {content.chapters.map((chapter) => (
+          {content.chapters.map((chapter, index) => (
             <article
               key={chapter.id}
               className="story-chapter absolute inset-x-0 top-0 mx-auto flex flex-col items-center gap-4 text-center opacity-0 will-change-transform sm:gap-5"
             >
-              <span className="text-[11px] font-medium uppercase tracking-[0.28em] text-amber-200/80 sm:text-xs">
+              <span
+                className={`text-[11px] font-semibold uppercase tracking-[0.28em] sm:text-xs ${
+                  index < 2
+                    ? 'text-stone-950 drop-shadow-[0_1px_10px_rgba(255,255,255,0.35)]'
+                    : 'text-stone-100/90 drop-shadow-[0_1px_10px_rgba(0,0,0,0.6)]'
+                }`}
+              >
                 {chapter.eyebrow}
               </span>
               <h2 className="font-heading text-balance text-3xl font-medium leading-[1.1] sm:text-5xl md:text-6xl lg:text-7xl">

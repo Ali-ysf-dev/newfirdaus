@@ -7,8 +7,10 @@ import path from 'path'
 export default defineConfig({
   plugins: [react(), tailwindcss()],
   resolve: {
+    dedupe: ['three'],
     alias: {
       '@': path.resolve(__dirname, './src'),
+      three: path.resolve(__dirname, './node_modules/three'),
     },
   },
 })

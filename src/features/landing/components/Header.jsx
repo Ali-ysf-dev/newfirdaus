@@ -93,6 +93,7 @@ function Header({ content, language, onLanguageChange }) {
             language={language}
             onLanguageChange={onLanguageChange}
             content={content}
+            className="hidden md:inline-flex"
           />
 
           <a
@@ -144,7 +145,7 @@ function Header({ content, language, onLanguageChange }) {
       <div
         className={cn(
           'overflow-hidden border-t border-white/5 transition-[max-height] duration-300 md:hidden',
-          open ? 'max-h-64' : 'max-h-0'
+          open ? 'max-h-80' : 'max-h-0'
         )}
       >
         <nav
@@ -163,6 +164,15 @@ function Header({ content, language, onLanguageChange }) {
             </a>
             )
           )}
+
+          <div className="pt-2">
+            <LanguageToggle
+              language={language}
+              onLanguageChange={onLanguageChange}
+              content={content}
+              className="flex w-fit"
+            />
+          </div>
         </nav>
       </div>
     </header>

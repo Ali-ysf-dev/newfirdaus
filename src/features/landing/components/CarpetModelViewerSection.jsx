@@ -76,6 +76,7 @@ function CarpetModelViewerSection({ content }) {
 
   const [hasEnteredView, setHasEnteredView] = useState(false)
   const [activeId, setActiveId] = useState(content.options[0]?.id ?? '')
+  const [resetKey, setResetKey] = useState(0)
 
   useEffect(() => {
     if (inView) setHasEnteredView(true)
@@ -128,6 +129,16 @@ function CarpetModelViewerSection({ content }) {
                 </button>
               ))}
             </div>
+
+            <div>
+              <button
+                type="button"
+                onClick={() => setResetKey((value) => value + 1)}
+                className="rounded-full border border-white/15 bg-white/5 px-4 py-2 text-sm text-stone-200 transition-all duration-300 hover:border-white/30 hover:bg-white/10 hover:text-stone-50"
+              >
+                {content.resetLabel}
+              </button>
+            </div>
           </div>
 
           <div className="relative">
@@ -145,6 +156,7 @@ function CarpetModelViewerSection({ content }) {
                   controls
                   intensity={0.72}
                   shadows="contact"
+                  resetKey={resetKey}
                 >
                   <AnimatedCarpetTransition transitionKey={activeId}>
                     <ActiveModel
