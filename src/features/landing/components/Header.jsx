@@ -3,7 +3,42 @@ import { useEffect, useState } from 'react'
 import { buttonVariants } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 
-function Header() {
+function LanguageToggle({
+  language,
+  onLanguageChange,
+  content,
+  className,
+}) {
+  return (
+    <div
+      role="group"
+      aria-label={content.languageToggleLabel}
+      className={cn(
+        'inline-flex items-center rounded-full border border-white/10 bg-white/5 p-1',
+        className
+      )}
+    >
+      {Object.entries(content.languageOptions).map(([code, label]) => (
+        <button
+          key={code}
+          type="button"
+          aria-pressed={language === code}
+          onClick={() => onLanguageChange(code)}
+          className={cn(
+            'rounded-full px-2.5 py-1 text-[11px] font-medium uppercase tracking-[0.2em] transition-colors',
+            language === code
+              ? 'bg-stone-50 text-stone-950'
+              : 'text-stone-200 hover:text-stone-50'
+          )}
+        >
+          {label}
+        </button>
+      ))}
+    </div>
+  )
+}
+
+function Header({ content, language, onLanguageChange }) {
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
 
@@ -39,21 +74,27 @@ function Header() {
         </a>
 
         <nav
-          aria-label="Primary"
+          aria-label={content.primaryNavLabel}
           className="hidden items-center gap-8 text-sm text-stone-200/80 md:flex"
         >
-          <a className="transition-colors hover:text-stone-50" href="#story">
-            Story
-          </a>
-          <a className="transition-colors hover:text-stone-50" href="#craft">
-            Craft
-          </a>
-          <a className="transition-colors hover:text-stone-50" href="#collection">
-            Collection
-          </a>
+          {content.navItems.map((item) => (
+            <a
+              key={item.href}
+              className="transition-colors hover:text-stone-50"
+              href={item.href}
+            >
+              {item.label}
+            </a>
+          ))}
         </nav>
 
         <div className="flex items-center gap-2">
+          <LanguageToggle
+            language={language}
+            onLanguageChange={onLanguageChange}
+            content={content}
+          />
+
           <a
             href="#contact"
             className={cn(
@@ -61,17 +102,17 @@ function Header() {
               'bg-stone-50 text-stone-950 hover:bg-stone-200'
             )}
           >
-            Discover
+            {content.ctaLabel}
           </a>
 
           <button
             type="button"
-            aria-label={open ? 'Close menu' : 'Open menu'}
+            aria-label={open ? content.closeMenuLabel : content.openMenuLabel}
             aria-expanded={open}
             onClick={() => setOpen((v) => !v)}
             className="inline-flex size-9 items-center justify-center rounded-md text-stone-100 transition-colors hover:bg-white/10 md:hidden"
           >
-            <span className="sr-only">Toggle menu</span>
+            <span className="sr-only">{content.toggleMenuLabel}</span>
             <svg
               width="18"
               height="18"
@@ -107,15 +148,11 @@ function Header() {
         )}
       >
         <nav
-          aria-label="Mobile"
+          aria-label={content.mobileNavLabel}
           className="flex flex-col gap-1 px-4 pb-4 pt-2 text-base text-stone-100"
         >
-          {[
-            { label: 'Story', href: '#story' },
-            { label: 'Craft', href: '#craft' },
-            { label: 'Collection', href: '#collection' },
-            { label: 'Contact', href: '#contact' },
-          ].map((item) => (
+          {[...content.navItems, { label: content.contactLabel, href: '#contact' }].map(
+            (item) => (
             <a
               key={item.href}
               href={item.href}
@@ -124,7 +161,8 @@ function Header() {
             >
               {item.label}
             </a>
-          ))}
+            )
+          )}
         </nav>
       </div>
     </header>

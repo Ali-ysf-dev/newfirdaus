@@ -1,4 +1,4 @@
-function Footer() {
+function Footer({ content }) {
   return (
     <footer>
       <div className="mx-auto w-full max-w-7xl px-5 py-10 sm:px-8">
@@ -13,25 +13,27 @@ function Footer() {
             />
           </div>
 
-          <nav aria-label="Footer" className="flex flex-wrap justify-center gap-x-6 gap-y-2 text-center">
-            <a className="text-sm text-stone-300 transition-colors hover:text-white" href="#story">
-              Story
-            </a>
-            <a className="text-sm text-stone-300 transition-colors hover:text-white" href="#craft">
-              Craft
-            </a>
-            <a className="text-sm text-stone-300 transition-colors hover:text-white" href="#collection">
-              Collection
-            </a>
-            <a className="text-sm text-stone-300 transition-colors hover:text-white" href="#contact">
-              Contact
-            </a>
+          <nav
+            aria-label={content.navLabel}
+            className="flex flex-wrap justify-center gap-x-6 gap-y-2 text-center"
+          >
+            {content.navItems.map((item) => (
+              <a
+                key={item.href}
+                className="text-sm text-stone-300 transition-colors hover:text-white"
+                href={item.href}
+              >
+                {item.label}
+              </a>
+            ))}
           </nav>
 
           <div className="space-y-1 text-center text-xs text-stone-400 lg:text-right">
-            <p>© {new Date().getFullYear()} Firdaus. All rights reserved.</p>
+            <p>
+              © {new Date().getFullYear()} Firdaus. {content.rightsLabel}
+            </p>
             <p className="text-stone-300/90">
-              Designed and developed by{' '}
+              {content.designedByLabel}{' '}
               <span className="font-medium tracking-[0.08em] text-white">
                 ALI YOUSSEF
               </span>

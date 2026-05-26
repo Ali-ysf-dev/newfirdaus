@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 
 import { gsap, useGSAP, ScrollTrigger } from '@/lib/animations/gsap'
-import { heroChapters } from '@/features/landing/data/chapters'
 
 /**
  * Image sequence configuration.
@@ -26,7 +25,7 @@ const SEQUENCE_CONFIG = {
   },
 }
 
-function HeroSequence() {
+function HeroSequence({ content }) {
   const sectionRef = useRef(null)
   const canvasRef = useRef(null)
   const framesRef = useRef([])
@@ -272,7 +271,7 @@ function HeroSequence() {
   return (
     <section
       ref={sectionRef}
-      aria-label="Carpet story hero"
+      aria-label={content.ariaLabel}
       className="relative h-svh w-full overflow-hidden bg-stone-950 text-stone-50"
     >
       {/* Image sequence canvas */}
@@ -301,7 +300,7 @@ function HeroSequence() {
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="flex flex-col items-center gap-4 text-stone-200/80">
             <span className="text-[11px] uppercase tracking-[0.32em]">
-              Preparing the loom
+              {content.loadingLabel}
             </span>
             <div className="h-px w-40 overflow-hidden bg-white/10 sm:w-56">
               <div
@@ -319,7 +318,7 @@ function HeroSequence() {
       {/* Chapter overlays — pinned timeline fades these in then out */}
       <div className="pointer-events-none absolute inset-0 flex items-center justify-center px-5 sm:px-8">
         <div className="relative w-full max-w-3xl">
-          {heroChapters.map((chapter) => (
+          {content.chapters.map((chapter) => (
             <article
               key={chapter.id}
               className="story-chapter absolute inset-x-0 top-0 mx-auto flex flex-col items-center gap-4 text-center opacity-0 will-change-transform sm:gap-5"
@@ -341,7 +340,7 @@ function HeroSequence() {
       {/* Scroll cue */}
       <div className="hero-scroll-cue absolute inset-x-0 bottom-6 flex flex-col items-center gap-2 text-stone-200/70 sm:bottom-10">
         <span className="text-[10px] uppercase tracking-[0.32em] sm:text-xs">
-          Scroll to begin
+          {content.scrollCueLabel}
         </span>
         <span
           aria-hidden="true"
@@ -351,10 +350,10 @@ function HeroSequence() {
 
       <span className="sr-only" aria-live="polite">
         {framesReady
-          ? 'Carpet story sequence loaded.'
+          ? content.liveLoadedLabel
           : framesMissing
-            ? 'Image sequence not yet available; showing placeholder.'
-            : `Loading carpet story, ${Math.round(progress * 100)} percent.`}
+            ? content.liveMissingLabel
+            : content.getLiveLoadingLabel(Math.round(progress * 100))}
       </span>
     </section>
   )
