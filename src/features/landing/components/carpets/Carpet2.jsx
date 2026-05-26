@@ -48,6 +48,5 @@ function Carpet2(props) {
   )
 }
 
-useGLTF.preload(MODEL_URL, DRACO_DECODER_PATH)
 
 export { Carpet2 }
