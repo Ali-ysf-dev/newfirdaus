@@ -1,8 +1,43 @@
-import { Suspense } from 'react'
+import { Suspense, useEffect, useRef } from 'react'
 import { Canvas } from '@react-three/fiber'
-import { OrbitControls, Stage } from '@react-three/drei'
+import { CameraControls, Stage } from '@react-three/drei'
 
 import { cn } from '@/lib/utils'
+
+const INITIAL_CAMERA = {
+  position: [0, 6, 22],
+  target: [0, 0.5, 0],
+}
+
+function ViewerCameraControls({ controlsRef }) {
+
+  useEffect(() => {
+    const controls = controlsRef.current
+    if (!controls) return
+
+    const [px, py, pz] = INITIAL_CAMERA.position
+    const [tx, ty, tz] = INITIAL_CAMERA.target
+    controls.setLookAt(px, py, pz, tx, ty, tz, false)
+  }, [controlsRef])
+
+  return (
+    <CameraControls
+      ref={controlsRef}
+      makeDefault
+      minDistance={4.5}
+      maxDistance={40}
+      minPolarAngle={0}
+      maxPolarAngle={Math.PI - 0.08}
+      dollySpeed={2.4}
+      truckSpeed={1.4}
+      azimuthRotateSpeed={0.9}
+      polarRotateSpeed={0.9}
+      smoothTime={0.55}
+      draggingSmoothTime={0.12}
+      dollyToCursor
+    />
+  )
+}
 
 /**
  * Shared 3D canvas for any of the carpet models. The carpet itself is
@@ -11,7 +46,6 @@ import { cn } from '@/lib/utils'
  *
  * - Stage `preset="rembrandt"` provides a soft three-point key/fill/back lighting rig.
  * - Stage `environment="city"` adds an HDRI for realistic reflections and ambient.
- * - `adjustCamera` re-frames the camera to fit whichever carpet is mounted.
  */
 function CarpetViewer({
   children,
@@ -21,6 +55,8 @@ function CarpetViewer({
   shadows = 'contact',
   ...canvasProps
 }) {
+  const controlsRef = useRef(null)
+
   return (
     <div
       className={cn(
@@ -42,21 +78,12 @@ function CarpetViewer({
             environment="city"
             intensity={intensity}
             shadows={shadows}
-            adjustCamera={1.2}
+            adjustCamera={false}
           >
             {children}
           </Stage>
         </Suspense>
-        {controls && (
-          <OrbitControls
-            makeDefault
-            enablePan={false}
-            minPolarAngle={Math.PI / 6}
-            maxPolarAngle={Math.PI / 2.05}
-            minDistance={6}
-            maxDistance={40}
-          />
-        )}
+        {controls && <ViewerCameraControls controlsRef={controlsRef} />}
       </Canvas>
     </div>
   )
