@@ -33,7 +33,7 @@ function Carpet3(props) {
         material={
           materials['tripo_mat_93f5d5d4-b371-4a7f-9c7e-aabf3af89880.001']
         }
-        position={[0, 12, 0.15]}
+        position={[0, 12, 0.208]}
         rotation={[Math.PI / 2, -1.553, Math.PI / 2]}
       />
       <mesh
@@ -44,9 +44,27 @@ function Carpet3(props) {
         position={[0, 11, 0.18]}
         rotation={[Math.PI / 2, 0, 0]}
       />
+      <mesh
+        castShadow
+        receiveShadow
+        geometry={nodes.Cylinder.geometry}
+        material={materials['Material.001']}
+        position={[2.614, 7.025, 0]}
+        scale={[0.867, 6.265, 0.486]}
+      />
+      <mesh
+        castShadow
+        receiveShadow
+        geometry={nodes.Cylinder001.geometry}
+        material={materials['Material.001']}
+        position={[-2.626, 7.025, -0.001]}
+        rotation={[Math.PI, 0, Math.PI]}
+        scale={[0.867, 6.265, 0.486]}
+      />
     </group>
   )
 }
 
+useGLTF.preload(MODEL_URL, DRACO_DECODER_PATH)
 
 export { Carpet3 }
