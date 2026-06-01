@@ -1,6 +1,5 @@
 import { motion, useReducedMotion } from 'framer-motion'
 
-import { CleverReachSignupForm } from '@/components/CleverReachSignupForm'
 import { buttonVariants } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 
@@ -56,12 +55,6 @@ function CtaSection({ content }) {
               {content.secondaryLabel}
             </a>
           </div>
-
-          <CleverReachSignupForm
-            action={content.form.action}
-            content={content.form}
-            className="mt-4 w-full max-w-2xl"
-          />
         </div>
       </motion.div>
     </section>

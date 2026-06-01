@@ -132,11 +132,21 @@ const landingContent = {
       primaryHref: 'https://www.firdaus.eu/shop-1',
       secondaryLabel: 'Mehr erfahren',
       secondaryHref: '#',
+    },
+    newsletter: {
+      id: 'newsletter',
+      ariaLabel: 'Newsletter-Anmeldung',
+      eyebrow: 'Newsletter',
+      title: 'Mit Firdaus verbunden bleiben',
+      description:
+        'Erhalten Sie Updates zu neuen Gebetsteppichen, App-Funktionen und Produktneuheiten direkt per E-Mail.',
+      highlights: [
+        'Neue Kollektionen und Farben zuerst erfahren',
+        'App-Updates und smarte Gebetsfunktionen',
+        'Exklusive Einblicke hinter die Marke',
+      ],
       form: {
         action: 'https://seu2.cleverreach.com/f/443937-427918/wcs/',
-        title: 'Mit Firdaus verbunden bleiben',
-        description:
-          'Erhalten Sie Updates zu neuen Gebetsteppichen, App-Funktionen und Produktneuheiten direkt per E-Mail.',
         emailLabel: 'E-Mail*',
         emailPlaceholder: 'name@example.com',
         submitLabel: 'Abonnieren',
@@ -152,6 +162,7 @@ const landingContent = {
         { label: 'Gebetsteppich', href: '#collection' },
         { label: 'Viewer', href: '#viewer' },
         { label: 'Kontakt', href: '#contact' },
+        { label: 'Newsletter', href: '#newsletter' },
       ],
       rightsLabel: 'Alle Rechte vorbehalten.',
       designedByLabel: 'Entworfen und entwickelt von',
@@ -290,11 +301,21 @@ const landingContent = {
       primaryHref: 'https://www.firdaus.eu/shop-1',
       secondaryLabel: 'Learn More',
       secondaryHref: '#',
+    },
+    newsletter: {
+      id: 'newsletter',
+      ariaLabel: 'Newsletter signup',
+      eyebrow: 'Newsletter',
+      title: 'Stay close to Firdaus',
+      description:
+        'Receive updates about new prayer rugs, app features, and upcoming Firdaus releases by email.',
+      highlights: [
+        'Be first to hear about new collections and colors',
+        'App updates and smart prayer features',
+        'Exclusive behind-the-scenes brand news',
+      ],
       form: {
         action: 'https://seu2.cleverreach.com/f/443937-427918/wcs/',
-        title: 'Stay close to Firdaus',
-        description:
-          'Receive updates about new prayer rugs, app features, and upcoming Firdaus releases by email.',
         emailLabel: 'Email*',
         emailPlaceholder: 'name@example.com',
         submitLabel: 'Subscribe',
@@ -310,6 +331,7 @@ const landingContent = {
         { label: 'Prayer Rug', href: '#collection' },
         { label: 'Viewer', href: '#viewer' },
         { label: 'Contact', href: '#contact' },
+        { label: 'Newsletter', href: '#newsletter' },
       ],
       rightsLabel: 'All rights reserved.',
       designedByLabel: 'Designed and developed by',

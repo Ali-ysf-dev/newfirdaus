@@ -7,6 +7,7 @@ import { StoryChapter } from '@/features/landing/components/StoryChapter'
 import { Showcase } from '@/features/landing/components/Showcase'
 import { CarpetModelViewerSection } from '@/features/landing/components/CarpetModelViewerSection'
 import { CtaSection } from '@/features/landing/components/CtaSection'
+import { NewsletterSection } from '@/features/landing/components/NewsletterSection'
 import { Footer } from '@/features/landing/components/Footer'
 import { landingContent } from '@/features/landing/data/landingContent'
 
@@ -77,6 +78,7 @@ function CarpetLandingPage() {
         <SectionSeparator />
 
         <CtaSection content={content.cta} />
+        <NewsletterSection content={content.newsletter} />
       </main>
 
       <Footer content={content.footer} />
