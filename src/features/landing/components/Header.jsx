@@ -52,12 +52,20 @@ function Header({ content, language, onLanguageChange }) {
   return (
     <header
       className={cn(
-        'fixed inset-x-0 top-0 z-50 transition-all duration-300',
+        'fixed inset-x-0 top-0 z-50 transition-all duration-500',
         scrolled || open
-          ? 'bg-stone-950/80 backdrop-blur-md'
+          ? 'border-b border-white/8 bg-black/60 shadow-[0_1px_40px_rgba(0,0,0,0.5)] backdrop-blur-xl'
           : 'bg-transparent'
       )}
     >
+      {/* Top gradient fade — blends header into the ambient bg */}
+      {!scrolled && !open && (
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-x-0 top-0 h-28 bg-[linear-gradient(to_bottom,rgba(12,9,6,0.7)_0%,transparent_100%)]"
+        />
+      )}
+
       <div className="mx-auto flex h-14 w-full max-w-7xl items-center justify-between px-4 sm:h-16 sm:px-6 lg:px-8">
         <a
           href="#top"
@@ -80,7 +88,7 @@ function Header({ content, language, onLanguageChange }) {
           {content.navItems.map((item) => (
             <a
               key={item.href}
-              className="transition-colors hover:text-stone-50"
+              className="nav-link py-1 transition-colors duration-200 hover:text-stone-50"
               href={item.href}
             >
               {item.label}

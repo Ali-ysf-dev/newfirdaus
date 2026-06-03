@@ -1,26 +1,40 @@
 function Footer({ content }) {
   return (
-    <footer>
-      <div className="mx-auto w-full max-w-7xl px-5 py-10 sm:px-8">
-        <div className="grid gap-6 lg:grid-cols-[1fr_auto_1fr] lg:items-center">
-          <div className="flex justify-center lg:justify-start">
+    <footer className="relative mt-4">
+      {/* Gradient top separator */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 top-0 h-px bg-[linear-gradient(to_right,transparent,rgba(245,185,50,0.35)_30%,rgba(255,255,255,0.15)_50%,rgba(245,185,50,0.35)_70%,transparent)]"
+      />
+      {/* Frosted glass panel behind footer content */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_top,rgba(6,4,2,0.85)_0%,rgba(12,9,6,0.5)_100%)] backdrop-blur-sm"
+      />
+
+      <div className="relative mx-auto w-full max-w-7xl px-5 py-10 sm:px-8">
+        <div className="grid gap-8 lg:grid-cols-[1fr_auto_1fr] lg:items-center">
+          <div className="flex flex-col items-center gap-3 lg:items-start">
             <img
               src="/Firdaus_logo.avif"
               alt="Firdaus"
-              className="h-5 w-auto sm:h-[22px]"
+              className="h-5 w-auto opacity-90 sm:h-[22px]"
               loading="lazy"
               decoding="async"
             />
+            <p className="text-xs text-stone-500">
+              © {new Date().getFullYear()} Firdaus. {content.rightsLabel}
+            </p>
           </div>
 
           <nav
             aria-label={content.navLabel}
-            className="flex flex-wrap justify-center gap-x-6 gap-y-2 text-center"
+            className="flex flex-wrap justify-center gap-x-6 gap-y-2.5 text-center"
           >
             {content.navItems.map((item) => (
               <a
                 key={item.href}
-                className="text-sm text-stone-300 transition-colors hover:text-white"
+                className="nav-link py-0.5 text-sm text-stone-400 transition-colors duration-200 hover:text-stone-100"
                 href={item.href}
               >
                 {item.label}
@@ -28,13 +42,10 @@ function Footer({ content }) {
             ))}
           </nav>
 
-          <div className="space-y-1 text-center text-xs text-stone-400 lg:text-right">
+          <div className="text-center text-xs text-stone-500 lg:text-right">
             <p>
-              © {new Date().getFullYear()} Firdaus. {content.rightsLabel}
-            </p>
-            <p className="text-stone-300/90">
               {content.designedByLabel}{' '}
-              <span className="font-medium tracking-[0.08em] text-white">
+              <span className="font-medium tracking-[0.08em] text-stone-200">
                 ALI YOUSSEF
               </span>
             </p>

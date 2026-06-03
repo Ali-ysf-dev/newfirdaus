@@ -3,6 +3,12 @@ import { motion, useInView, useReducedMotion } from 'framer-motion'
 
 import { cn } from '@/lib/utils'
 
+const GLOW_BY_ALIGN = {
+  start: 'section-glow-left',
+  end: 'section-glow-right',
+  center: 'section-glow-center',
+}
+
 function StoryChapter({
   id,
   eyebrow,
@@ -93,12 +99,16 @@ function StoryChapter({
     </>
   )
 
+  const glowClass = GLOW_BY_ALIGN[align] ?? 'section-glow-center'
+
   return (
     <section
       id={id}
       ref={ref}
       className={cn(
-        'relative w-full px-5 py-24 sm:px-8 sm:py-28 md:py-32 lg:py-40',
+        'relative w-full overflow-hidden px-5 py-24 sm:px-8 sm:py-28 md:py-32 lg:py-40',
+        glowClass,
+        inView && 'in-view',
         className
       )}
     >

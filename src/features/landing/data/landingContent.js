@@ -91,6 +91,7 @@ const landingContent = {
         { id: 'sand', label: 'Sand Weave', swatch: ['#e7d3ac', '#b08a52'] },
         { id: 'amber', label: 'Amber Bloom', swatch: ['#f0b46a', '#a85a1f'] },
         { id: 'onyx', label: 'Onyx Night', swatch: ['#6b7280', '#11161d'] },
+        { id: 'sage', label: 'Salbei Webung', swatch: ['#a8c4a0', '#3d5c42'] },
       ],
     },
     showcase: {
@@ -260,6 +261,7 @@ const landingContent = {
         { id: 'sand', label: 'Sand Weave', swatch: ['#e7d3ac', '#b08a52'] },
         { id: 'amber', label: 'Amber Bloom', swatch: ['#f0b46a', '#a85a1f'] },
         { id: 'onyx', label: 'Onyx Night', swatch: ['#6b7280', '#11161d'] },
+        { id: 'sage', label: 'Sage Weave', swatch: ['#a8c4a0', '#3d5c42'] },
       ],
     },
     showcase: {

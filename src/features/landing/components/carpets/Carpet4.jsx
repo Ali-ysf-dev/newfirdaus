@@ -1,9 +1,9 @@
 import { useGLTF } from '@react-three/drei'
 
-const MODEL_URL = '/models/model1.glb'
+const MODEL_URL = '/models/model4.glb'
 const DRACO_DECODER_PATH = '/draco/'
 
-function Carpet1(props) {
+function Carpet4(props) {
   const { nodes, materials } = useGLTF(MODEL_URL, DRACO_DECODER_PATH)
 
   return (
@@ -140,4 +140,4 @@ function Carpet1(props) {
 
 useGLTF.preload(MODEL_URL, DRACO_DECODER_PATH)
 
-export { Carpet1 }
+export { Carpet4 }

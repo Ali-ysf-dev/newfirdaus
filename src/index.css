@@ -123,7 +123,8 @@
   }
   html {
     @apply font-sans;
-    background-color: oklch(0.13 0.01 60);
+    /* Rich warm-dark base so no solid black flash on load */
+    background-color: #0c0906;
     scroll-behavior: smooth;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -134,8 +135,7 @@
     scroll-behavior: auto !important;
   }
   body {
-    @apply bg-background text-foreground;
-    background-color: oklch(0.13 0.01 60);
+    background-color: transparent;
     color: oklch(0.97 0 0);
     margin: 0;
     overscroll-behavior-y: none;
@@ -146,4 +146,114 @@ html,
 body,
 #root {
   min-height: 100%;
+}
+
+/* ─── PageBackground: ambient fixed layer ─────────────────────────────────── */
+
+.page-bg-grid {
+  background-image:
+    linear-gradient(to right,  rgba(255,255,255,0.026) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255,255,255,0.026) 1px, transparent 1px);
+  background-size: 68px 68px;
+  mask-image: radial-gradient(ellipse 90% 75% at 50% 38%, black 10%, transparent 70%);
+}
+
+.page-bg-diamond {
+  background-image:
+    repeating-linear-gradient(
+      45deg,
+      transparent 0,
+      transparent 34px,
+      rgba(245,185,50,0.032) 34px,
+      rgba(245,185,50,0.032) 35px
+    ),
+    repeating-linear-gradient(
+      -45deg,
+      transparent 0,
+      transparent 34px,
+      rgba(245,185,50,0.022) 34px,
+      rgba(245,185,50,0.022) 35px
+    );
+  mask-image: radial-gradient(ellipse 95% 80% at 50% 50%, black 0%, transparent 65%);
+}
+
+.page-bg-grain {
+  /* SVG feTurbulence noise — no external asset needed */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.78' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)' opacity='1'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 300px 300px;
+  opacity: 0.038;
+  mix-blend-mode: screen;
+}
+
+/* Orb drift animations */
+.page-bg-orb-a { animation: orb-drift-a 26s ease-in-out infinite; }
+.page-bg-orb-b { animation: orb-drift-b 32s ease-in-out infinite; }
+.page-bg-orb-c { animation: orb-drift-c 28s ease-in-out infinite; }
+
+@keyframes orb-drift-a {
+  0%,100% { transform: translate(0,  0)    scale(1);    }
+  33%      { transform: translate(4%, 5%)  scale(1.07); }
+  66%      { transform: translate(-3%,2%)  scale(0.96); }
+}
+@keyframes orb-drift-b {
+  0%,100% { transform: translate(0,   0)   scale(1);    }
+  40%      { transform: translate(-5%,-3%) scale(1.06); }
+  70%      { transform: translate(3%, -5%) scale(0.97); }
+}
+@keyframes orb-drift-c {
+  0%,100% { transform: translate(0,  0)   scale(1);    }
+  50%      { transform: translate(4%,-5%) scale(1.05); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-bg-orb { animation: none !important; }
+}
+
+/* ─── Header nav link underline animation ─────────────────────────────────── */
+.nav-link {
+  position: relative;
+}
+.nav-link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 0;
+  height: 1px;
+  background: rgba(251,211,77,0.7);
+  transition: width 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.nav-link:hover::after,
+.nav-link:focus-visible::after {
+  width: 100%;
+}
+
+/* ─── Section accent glows (added via data-accent) ───────────────────────── */
+.section-glow-left::before,
+.section-glow-right::before,
+.section-glow-center::before {
+  content: '';
+  pointer-events: none;
+  position: absolute;
+  width: min(50vw, 480px);
+  height: min(50vw, 480px);
+  border-radius: 9999px;
+  filter: blur(90px);
+  opacity: 0;
+  transition: opacity 0.9s ease;
+  background: radial-gradient(circle, rgba(220,160,40,0.14) 0%, transparent 70%);
+}
+.section-glow-left::before  { left: -15%; top: 20%; }
+.section-glow-right::before { right: -15%; top: 20%; }
+.section-glow-center::before {
+  left: 50%; top: 10%;
+  transform: translateX(-50%);
+  width: min(70vw, 700px);
+  height: min(40vw, 400px);
+}
+.section-glow-left.in-view::before,
+.section-glow-right.in-view::before,
+.section-glow-center.in-view::before {
+  opacity: 1;
 }

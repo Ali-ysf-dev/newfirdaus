@@ -9,6 +9,7 @@ import { CarpetModelViewerSection } from '@/features/landing/components/CarpetMo
 import { CtaSection } from '@/features/landing/components/CtaSection'
 import { NewsletterSection } from '@/features/landing/components/NewsletterSection'
 import { Footer } from '@/features/landing/components/Footer'
+import { PageBackground } from '@/features/landing/components/PageBackground'
 import { landingContent } from '@/features/landing/data/landingContent'
 
 function CarpetLandingPage() {
@@ -20,7 +21,9 @@ function CarpetLandingPage() {
   }, [language])
 
   return (
-    <div id="top" className="dark min-h-screen bg-stone-950 text-stone-100">
+    <div id="top" className="dark relative min-h-screen text-stone-100">
+      <PageBackground />
+
       <Header
         content={content.header}
         language={language}

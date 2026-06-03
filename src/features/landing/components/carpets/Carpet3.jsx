@@ -61,6 +61,15 @@ function Carpet3(props) {
         rotation={[Math.PI, 0, Math.PI]}
         scale={[0.867, 6.265, 0.486]}
       />
+      <mesh
+        castShadow
+        receiveShadow
+        geometry={nodes.glass_of_display.geometry}
+        material={materials['Material.005']}
+        position={[0.003, 11.875, 0.26]}
+        rotation={[Math.PI / 2, 0, 0]}
+        scale={[0.325, 1, 0.2]}
+      />
     </group>
   )
 }

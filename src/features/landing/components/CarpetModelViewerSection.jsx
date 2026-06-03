@@ -27,6 +27,11 @@ const carpetModels = {
       default: module.Carpet3,
     }))
   ),
+  sage: lazy(() =>
+    import('@/features/landing/components/carpets/Carpet4').then((module) => ({
+      default: module.Carpet4,
+    }))
+  ),
 }
 
 function ViewerState({ label, detail }) {
