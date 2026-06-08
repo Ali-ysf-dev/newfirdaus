@@ -26,6 +26,25 @@ function Carpet4(props) {
         rotation={[Math.PI, Math.PI / 2, 0]}
         scale={[0.007, 0.01, 0.002]}
       />
+      <group position={[0, 12, 0.04]} rotation={[-Math.PI / 2, 0, 0]}>
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Object_2.geometry}
+          material={materials.material_0}
+          position={[0.23, -0.17, 0.257]}
+          rotation={[0, 0, Math.PI]}
+          scale={[0.015, 0.04, 0.015]}
+        />
+      </group>
+      <mesh
+        castShadow
+        receiveShadow
+        geometry={nodes.Cube004.geometry}
+        material={nodes.Cube004.material}
+        position={[0.04, 12.26, 0.26]}
+        scale={[0.018, 0.015, 0.02]}
+      />
       <mesh
         castShadow
         receiveShadow
@@ -84,9 +103,9 @@ function Carpet4(props) {
         receiveShadow
         geometry={nodes.glass_of_display.geometry}
         material={materials['Material.005']}
-        position={[0.003, 11.875, 0.251]}
+        position={[-0.007, 12.005, 0.261]}
         rotation={[Math.PI / 2, 0, 0]}
-        scale={[0.32, 1, 0.2]}
+        scale={[0.39, 1, 0.38]}
       />
       <group
         position={[3.388, 12.887, 0.007]}
