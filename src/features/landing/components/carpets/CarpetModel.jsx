@@ -1,10 +1,27 @@
-import { useGLTF } from '@react-three/drei'
+import { useGLTF, useTexture } from '@react-three/drei'
+
+import { FOAM_TEXTURE_URLS } from '@/features/landing/components/carpets/carpetTextures'
+import { useFoamMaterials } from '@/features/landing/components/carpets/useFoamMaterials'
 
 const MODEL_URL = '/models/model1.glb'
 const DRACO_DECODER_PATH = '/draco/'
 
-function Carpet1(props) {
+function CarpetModel({ variant = 'sand', ...props }) {
   const { nodes, materials } = useGLTF(MODEL_URL, DRACO_DECODER_PATH)
+  const [sandTexture, amberTexture, onyxTexture, sageTexture] =
+    useTexture(FOAM_TEXTURE_URLS)
+
+  const foamTextures = {
+    sand: sandTexture,
+    amber: amberTexture,
+    onyx: onyxTexture,
+    sage: sageTexture,
+  }
+
+  const frontTextureMaterial = useFoamMaterials(
+    materials,
+    foamTextures[variant] ?? sandTexture
+  )
 
   return (
     <group {...props} dispose={null}>
@@ -64,7 +81,7 @@ function Carpet1(props) {
         castShadow
         receiveShadow
         geometry={nodes.front_texture.geometry}
-        material={materials['front model texture']}
+        material={frontTextureMaterial}
       />
       <mesh
         castShadow
@@ -167,5 +184,6 @@ function Carpet1(props) {
 }
 
 useGLTF.preload(MODEL_URL, DRACO_DECODER_PATH)
+useTexture.preload(FOAM_TEXTURE_URLS)
 
-export { Carpet1 }
+export { CarpetModel }

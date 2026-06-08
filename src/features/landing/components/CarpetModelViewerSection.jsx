@@ -11,28 +11,11 @@ const LazyCarpetViewer = lazy(() =>
   )
 )
 
-const carpetModels = {
-  sand: lazy(() =>
-    import('@/features/landing/components/carpets/Carpet1').then((module) => ({
-      default: module.Carpet1,
-    }))
-  ),
-  amber: lazy(() =>
-    import('@/features/landing/components/carpets/Carpet2').then((module) => ({
-      default: module.Carpet2,
-    }))
-  ),
-  onyx: lazy(() =>
-    import('@/features/landing/components/carpets/Carpet3').then((module) => ({
-      default: module.Carpet3,
-    }))
-  ),
-  sage: lazy(() =>
-    import('@/features/landing/components/carpets/Carpet4').then((module) => ({
-      default: module.Carpet4,
-    }))
-  ),
-}
+const LazyCarpetModel = lazy(() =>
+  import('@/features/landing/components/carpets/CarpetModel').then((module) => ({
+    default: module.CarpetModel,
+  }))
+)
 
 function ViewerState({ label, detail }) {
   return (
@@ -123,8 +106,7 @@ function CarpetModelViewerSection({ content }) {
     [activeId, content.options]
   )
 
-  const ActiveModel = activeOption ? carpetModels[activeOption.id] : null
-  const shouldRenderViewer = hasEnteredView && inView && ActiveModel
+  const shouldRenderViewer = hasEnteredView && inView && activeOption
 
   return (
     <section
@@ -176,8 +158,8 @@ function CarpetModelViewerSection({ content }) {
                     resetKey={resetKey}
                   >
                     <AnimatedCarpetTransition transitionKey={activeId}>
-                      <ActiveModel
-                        key={activeId}
+                      <LazyCarpetModel
+                        variant={activeId}
                         scale={1.1}
                         position={[0, -5.4, 0]}
                       />
